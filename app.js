@@ -7,27 +7,21 @@ const bodyParser = require('body-parser');
 const { url } = require('./const/mongo');
 const routes = require('./routes/index');
 const users = require('./routes/users');
+const mongoose = require('mongoose');
+var cors = require('cors')
+
 
 const app = express();
 
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
 
 
-// Database Name
-const dbName = 'myproject';
-// Create a new MongoClient
-const client = new MongoClient('mongodb://max:max450384rko@ds159634.mlab.com:59634/english_lessons');
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-  const db = client.db(dbName);
-  client.close();
-});
+mongoose.connect ('mongodb://max:max450384rko@ds159634.mlab.com:59634/english_lessons');
 
-// view engine setup
+const db = mongoose.connection;
+db.on('error', console.error.bind (console, 'connection error:'));
 
+
+app.use(cors());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -52,10 +46,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+       
     });
 }
 
@@ -63,10 +54,6 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
 });
 
 
