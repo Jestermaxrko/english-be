@@ -3,6 +3,8 @@ var router = express.Router();
 const Word = require('../models/word');
 const getDays = require('../utils/words');
 
+
+
 router.get('/api/days', async (req, res, next) => {
   try {
     const words = await Word.find();
