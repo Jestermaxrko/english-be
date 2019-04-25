@@ -1,9 +1,13 @@
-#!/usr/bin/nodejs
-var debug = require('debug')('my-application');
-var app = require('./app');
+const { GraphQLServer } = require('graphql-yoga')
+const mongoose = require('mongoose');
+const { typeDefs, resolvers } = require('./src/schema');
 
-app.set('port', 3000);
+mongoose.connect('mongodb://jester:maxjester1@ds147566.mlab.com:47566/dictionary', { useNewUrlParser: true });
 
-var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
-});
+const server = new GraphQLServer({
+  typeDefs,
+  resolvers,
+  context: request => request
+})
+
+server.start({ port: 3000 }, () => console.log(`Server is running on http://localhost:4000`))
