@@ -1,13 +1,14 @@
-const { GraphQLServer } = require('graphql-yoga')
+const { GraphQLServer } = require('graphql-yoga');
 const mongoose = require('mongoose');
-const { typeDefs, resolvers } = require('./src/schema');
+const { typeDefs, resolvers } = require('./src/schemas');
+const { url, options } = require('./src/const/mongo-config');
 
-mongoose.connect('mongodb://jester:maxjester1@ds147566.mlab.com:47566/dictionary', { useNewUrlParser: true });
+mongoose.connect(url, options);
 
 const server = new GraphQLServer({
-  typeDefs,
-  resolvers,
-  context: request => request
-})
+	typeDefs,
+	resolvers,
+	context: request => request
+});
 
-server.start({ port: 3000 }, () => console.log(`Server is running on http://localhost:4000`))
+server.start({ port: 3000 }, () => {});
