@@ -18,15 +18,26 @@ const getOne = params => {
 	return User.findOne(params);
 };
 
+const getUserById = id => {
+	return User.findById(id);
+}
+
 const updateAvatar = async (userId, link) => {
-	const data = await User.findByIdAndUpdate(userId, { avatar: link },{ new: true });
+	const data = await User.findByIdAndUpdate(userId, { avatar: link }, { new: true });
 	return data.avatar;
 };
+
+const updateUserInfo = async (id, params) => {
+	const data = await User.findByIdAndUpdate(id, params, { new: true });
+	return data;
+}
 
 module.exports = {
 	create,
 	isUserExists,
 	getOne,
 	isNicknameExists,
-	updateAvatar
+	updateAvatar,
+	updateUserInfo,
+	getUserById
 };

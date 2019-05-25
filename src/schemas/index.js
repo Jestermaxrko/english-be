@@ -30,6 +30,7 @@ type Mutation {
   createWord(dictionaryId: String!, word: String!, translation: [String!]!, categoryId: String): Word!
   createCategory(name: String!): Category!
   singleUpload(file: Upload!): String!
+  updateUser(nickname: String!, email: String!,firstname: String lastname: String): User!
 }
 type File {
   url: String!

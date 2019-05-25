@@ -4,6 +4,8 @@ const { typeDefs, resolvers } = require('./src/schemas');
 const { url, options } = require('./src/const/mongo-config');
 
 mongoose.connect(url, options);
+mongoose.set('useFindAndModify', false);
+
 
 const server = new GraphQLServer({
 	typeDefs,
